@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <style>
+.card
+{
+    width: 200px;
+    height: 200px;
+    background-color: yellow;
+    display: inline-block;
+    margin-right: 20px;
+    border:solid red;
+}
+#input-card
+{
+    width: 200px;
+    height: 300px;
+    background-color: crimson;
+    border: solid blue;
+}
+.name
+{
+    text-align: center;
+    font-size: larger;
+    color: blue;
+    font-family:Arial, Helvetica, sans-serif;
+
+}
+#top
+{
+    color: lavender;
+}
+#name,#age,#gender
+{
+    margin-bottom: 10px;
+}
+.delete
+{
+    display: flex;
+    justify-content: center;
+    background-color: red;
+    color: yellow;
+    margin-left: 75px;
+}
+.edit
+{
+    background-color: blue;
+    color: ivory;
+    margin-left: 75px;
+}
+#update
+{
+    display: none;
+}
+.delete:hover
+{
+    background-color: blue;
+}
+.edit:hover
+{
+    background-color: red;
+}
+
+
+   </style>
+</head>
+<body>
+    <div id="input-card">
+        <h1 id="top">Input your Data below</h1>
+        <input type="text" id="name" placeholder="Name">
+        <input type="text" id="age" placeholder="Age">
+        <input type="text" id="gender" placeholder="Gender"> 
+        <select name="Astrological Sign" id="sign" id="sign">
+            <option>Aries</option>
+            <option>Tauras</option>
+            <option>Gemini</option>
+            <option>Capricon</option>
+            <option>Leo</option>
+        </select>
+        <button onclick="addRow()" id="submit">Submit</button>
+        <button onclick="editcard()" id="update">Update</button>
+
+    </div>
+    <div id="demo"></div>
+    <script>
+        students=[
+            {name:'Prakash',age:23,gender:'M',sign:'Aries'},
+            {name:'Yashank',age:25,gender:'F',sign:'Tauras'},
+            {name:'David',age:21,gender:'M',sign:'Gemini'},
+            {name:'Minav',age:18,gender:'M',sign:'Capricon'},
+            {name:'Tanu',age:21,gender:'F',sign:'Leo'},
+        ]
+        demoobj=document.getElementById("demo");
+        render();
+            nameobj=document.getElementById("name");
+            ageobj=document.getElementById("age");
+            genderobj=document.getElementById("gender");
+            signobj=document.getElementById("sign");
+            submitobj=document.getElementById("submit");
+            updateobj=document.getElementById("update");
+            inputcardobj=document.getElementById("input-card")
+            topobj=document.getElementById("top");
+            var index=null;
+       
+
+        function render()
+        {
+            demoobj.innerHTML='';  
+        for(i=0;i<students.length;i++)
+        {
+            
+            html=`<div class='card'>
+                    <button onclick="Edit(${i})" class='edit'>Edit</button>
+                    <b><div class='name'>${students[i].name}
+                    </div></b>
+                    <div class='age'>Age: ${students[i].age}</age>
+                    <div class='gender-sign'>
+                        <div class='gender'>Gender: ${students[i].gender}</div>
+                        <div class='sign'>${students[i].sign}</div>
+                        <button onclick='deleteRow(${i})' class='delete'>Delete</button>
+                    </div>
+                </div>`
+                demoobj.innerHTML+=html;
+        }
+    }
+        function addRow()
+        {
+            
+            
+            value={name:nameobj.value,age:ageobj.value,gender:genderobj.value,sign:signobj.value};
+            students.push(value);
+            render();
+
+            
+        }
+
+        function deleteRow(ind)
+        {
+            students.splice(ind,1);
+            render();
+        }
+        
+        function Edit(inp)
+        {
+            
+            nameobj.value=students[inp].name;
+            ageobj.value=students[inp].age;
+            genderobj.value=students[inp].gender;
+            signobj.value=students[inp].sign;
+            index=inp;
+            
+            updateobj.style.display='block';
+            submitobj.style.display='none';
+            inputcardobj.style.backgroundColor='blue';
+            inputcardobj.style.border='solid red';
+            topobj.innerHTML="Edit your Data below"
+            
+
+
+
+            
+        }
+        function editcard()
+        {
+            updateobj.style.display='none';
+            submitobj.style.display='block';
+            inputcardobj.style.backgroundColor='crimson';
+            inputcardobj.style.border='solid blue';
+            topobj.innerHTML="Input your Data below"
+
+            console.log("Hello",index);
+            students[index].name=nameobj.value;
+            students[index].age=ageobj.value;
+            students[index].gender=genderobj.value;
+            students[index].sign=signobj.value;
+            
+
+            render();
+            
+            
+
+        }
+
+
+    </script>
+</body>
+</html>
